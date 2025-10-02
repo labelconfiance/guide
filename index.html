@@ -1,0 +1,3280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Confiance - Guide d'accompagnement</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --trust-blue: #0A4D92;
+            --trust-light: #4A90E2;
+            --trust-lighter: #E8F2FC;
+            --trust-accent: #2C5F8D;
+            --trust-dark: #062B52;
+            --gold-accent: #D4AF37;
+            --text-dark: #1A1A1A;
+            --text-medium: #4A4A4A;
+            --text-light: #6B6B6B;
+            --background: #FFFFFF;
+            --background-alt: #F8FAFC;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--background);
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        /* Header Styling */
+        .header {
+            background: var(--trust-dark);
+            color: white;
+            padding: 100px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold-accent);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+        
+        .header-meta {
+            display: flex;
+            gap: 30px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section:nth-child(even) {
+            background: var(--background-alt);
+        }
+        
+        .section-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--trust-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--trust-dark);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        
+        .section-subtitle {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--trust-blue);
+            margin: 50px 0 25px;
+            line-height: 1.3;
+        }
+        
+        .section-subsubtitle {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--trust-accent);
+            margin: 40px 0 20px;
+        }
+        
+        /* Content Boxes */
+        .info-box {
+            background: white;
+            border-left: 4px solid var(--trust-blue);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, var(--trust-lighter) 0%, #F0F7FF 100%);
+            border: 2px solid var(--trust-light);
+            padding: 35px;
+            margin: 30px 0;
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--trust-blue), var(--trust-light));
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .warning-box {
+            background: #FFF9E6;
+            border-left: 4px solid var(--gold-accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .success-box {
+            background: #E6F7F0;
+            border-left: 4px solid #2ECC71;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Pillar Cards */
+        .pillar-card {
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            margin: 50px 0;
+            box-shadow: 0 10px 40px rgba(10, 77, 146, 0.1);
+            border-top: 6px solid var(--trust-blue);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(10, 77, 146, 0.15);
+        }
+        
+        .pillar-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--trust-blue), var(--trust-light));
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .pillar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--trust-dark);
+            margin-bottom: 25px;
+        }
+        
+        /* Lists */
+        .custom-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .custom-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .custom-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 10px;
+            color: var(--trust-blue);
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid var(--trust-lighter);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            border-color: var(--trust-blue);
+            box-shadow: 0 5px 20px rgba(10, 77, 146, 0.1);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--trust-blue), var(--trust-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--trust-dark);
+            margin-bottom: 12px;
+        }
+        
+        .feature-text {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        /* Action Cards */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .action-card {
+            background: linear-gradient(135deg, white 0%, var(--trust-lighter) 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--trust-blue);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .action-number {
+            display: inline-block;
+            background: var(--trust-blue);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .action-title {
+            font-weight: 600;
+            font-size: 17px;
+            color: var(--trust-dark);
+            margin-bottom: 10px;
+        }
+        
+        .action-text {
+            font-size: 14px;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        /* Criteria Tables */
+        .criteria-section {
+            background: white;
+            border-radius: 12px;
+            padding: 35px;
+            margin: 30px 0;
+            border: 1px solid var(--trust-lighter);
+        }
+        
+        .criteria-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--trust-blue);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--trust-lighter);
+        }
+        
+        .criteria-list {
+            list-style: none;
+        }
+        
+        .criteria-list li {
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: var(--background-alt);
+            border-radius: 8px;
+            border-left: 4px solid var(--trust-light);
+            line-height: 1.7;
+        }
+        
+        /* Quote Styling */
+        .quote {
+            background: var(--trust-dark);
+            color: white;
+            padding: 50px;
+            margin: 60px 0;
+            border-radius: 12px;
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 120px;
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            opacity: 0.2;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Emphasis Blocks */
+        .emphasis-strong {
+            background: linear-gradient(135deg, var(--trust-blue) 0%, var(--trust-light) 100%);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-weight: 500;
+            box-shadow: 0 5px 20px rgba(10, 77, 146, 0.2);
+        }
+        
+        .emphasis-strong strong {
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Typography */
+        p {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: var(--text-medium);
+        }
+        
+        strong {
+            font-weight: 600;
+            color: var(--trust-dark);
+        }
+        
+        em {
+            font-style: italic;
+            color: var(--trust-blue);
+        }
+        
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, var(--trust-dark), var(--trust-blue));
+            color: white;
+        }
+        
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--trust-lighter);
+        }
+        
+        tbody tr:hover {
+            background: var(--background-alt);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--trust-dark);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-text {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+        
+        .footer-meta {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .pillar-card {
+                padding: 30px;
+            }
+            
+            .feature-grid,
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .header {
+                background: var(--trust-dark);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .header::after {
+                background: var(--gold-accent);
+            }
+            
+            .pillar-card {
+                page-break-inside: avoid;
+            }
+        }
+    
+/* Barre de progression de lecture */
+#progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    z-index: 9999;
+}
+#progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    border-radius: 0 3px 3px 0;
+    transition: width 0.1s ease-out;
+}
+
+/* Sommaire flottant */
+#floating-toc {
+    position: fixed;
+    right: 30px;
+    top: 120px;
+    width: 280px;
+    max-height: calc(100vh - 160px);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(10, 77, 146, 0.15);
+    padding: 25px;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border: 2px solid var(--trust-lighter);
+}
+
+#floating-toc.hidden {
+    transform: translateX(350px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#toc-toggle {
+    position: fixed;
+    right: 30px;
+    top: 80px;
+    background: linear-gradient(135deg, var(--trust-blue), var(--trust-light));
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(10, 77, 146, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 1001;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#toc-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(10, 77, 146, 0.4);
+}
+
+/* Bouton PDF */
+#pdf-download {
+    position: fixed;
+    right: 30px;
+    top: 140px;
+    background: linear-gradient(135deg, var(--gold-accent), #B8941F);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 1001;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+#pdf-download:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+}
+
+#floating-toc h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--trust-dark);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--trust-lighter);
+}
+
+.toc-chapter {
+    margin-bottom: 15px;
+}
+
+.toc-chapter-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--trust-blue);
+    margin-bottom: 8px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toc-chapter-title:hover {
+    background: var(--trust-lighter);
+}
+
+.toc-chapter-title.active {
+    background: var(--trust-blue);
+    color: white;
+}
+
+.toc-sections {
+    padding-left: 15px;
+    margin-top: 5px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.toc-sections.expanded {
+    max-height: 500px;
+}
+
+.toc-section {
+    font-size: 13px;
+    color: var(--text-medium);
+    padding: 6px 12px;
+    margin: 3px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+.toc-section:hover {
+    background: var(--background-alt);
+    border-left-color: var(--trust-light);
+    padding-left: 15px;
+}
+
+.toc-section.active {
+    background: var(--trust-lighter);
+    color: var(--trust-dark);
+    border-left-color: var(--trust-blue);
+    font-weight: 500;
+}
+
+.toc-chevron {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.toc-chevron.rotated {
+    transform: rotate(180deg);
+}
+
+/* Scrollbar personnalisée pour le sommaire */
+#floating-toc::-webkit-scrollbar {
+    width: 6px;
+}
+
+#floating-toc::-webkit-scrollbar-track {
+    background: var(--background-alt);
+    border-radius: 10px;
+}
+
+#floating-toc::-webkit-scrollbar-thumb {
+    background: var(--trust-light);
+    border-radius: 10px;
+}
+
+#floating-toc::-webkit-scrollbar-thumb:hover {
+    background: var(--trust-blue);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    #floating-toc {
+        width: 240px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #floating-toc {
+        display: none;
+    }
+    #toc-toggle {
+        display: none;
+    }
+    #pdf-download {
+        top: 80px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #pdf-download {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+        right: 15px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Barre de progression lecture -->
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<!-- Bouton toggle du sommaire -->
+<button id="toc-toggle" aria-label="Toggle table of contents">
+  <span>☰</span>
+</button>
+
+<!-- Bouton de conversion PDF -->
+<button id="pdf-download" aria-label="Télécharger en PDF">
+  <span>📄</span>
+</button>
+
+<!-- Sommaire flottant -->
+<nav id="floating-toc" class="hidden">
+  <h3>Sommaire</h3>
+  
+  <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="section-1">
+      <span>Chapitre 1 : Préface & Introduction</span>
+      <span class="toc-chevron">▼</span>
+    </div>
+    <div class="toc-sections">
+      <div class="toc-section" data-section="section-1-1">1.1 Message de bienvenue</div>
+      <div class="toc-section" data-section="section-1-2">1.2 Pourquoi un Label basé sur la confiance ?</div>
+      <div class="toc-section" data-section="section-1-3">1.3 L'esprit du Label</div>
+      <div class="toc-section" data-section="section-1-4">1.4 Objectifs et bénéfices</div>
+      <div class="toc-section" data-section="section-1-5">1.5 Différence avec une certification</div>
+    </div>
+  </div>
+  
+  <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="section-2">
+      <span>Chapitre 2 : La démarche</span>
+      <span class="toc-chevron">▼</span>
+    </div>
+    <div class="toc-sections">
+      <div class="toc-section" data-section="section-2-1">2.1 Principes fondateurs</div>
+      <div class="toc-section" data-section="section-2-2">2.2 Étapes pour le cabinet</div>
+      <div class="toc-section" data-section="section-2-3">2.3 Rôle du référentiel</div>
+      <div class="toc-section" data-section="section-2-4">2.4 Engagement attendu</div>
+    </div>
+  </div>
+  
+  <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="section-3">
+      <span>Chapitre 3 : Les 7 piliers</span>
+      <span class="toc-chevron">▼</span>
+    </div>
+    <div class="toc-sections">
+      <div class="toc-section" data-section="pilier-1">Pilier 1 : Relations humaines</div>
+      <div class="toc-section" data-section="pilier-2">Pilier 2 : Management éthique</div>
+      <div class="toc-section" data-section="pilier-3">Pilier 3 : Bien-être et santé mentale</div>
+      <div class="toc-section" data-section="pilier-4">Pilier 4 : Inclusion et diversité</div>
+      <div class="toc-section" data-section="pilier-5">Pilier 5 : Reconnaissance et évolution</div>
+      <div class="toc-section" data-section="pilier-6">Pilier 6 : Engagement sociétal</div>
+      <div class="toc-section" data-section="pilier-7">Pilier 7 : Relations clients</div>
+    </div>
+  </div>
+  
+  <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="section-4">
+      <span>Chapitre 4 : Outils pratiques</span>
+      <span class="toc-chevron">▼</span>
+    </div>
+    <div class="toc-sections">
+      <div class="toc-section" data-section="section-4-1">4.1 Auto-questionnaires</div>
+      <div class="toc-section" data-section="section-4-2">4.2 Modèles de plan d'action</div>
+      <div class="toc-section" data-section="section-4-3">4.3 Indicateurs</div>
+    </div>
+  </div>
+  
+  <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="section-5">
+      <span>Chapitre 5 : Illustrations</span>
+      <span class="toc-chevron">▼</span>
+    </div>
+    <div class="toc-sections">
+      <div class="toc-section" data-section="section-5-1">5.1 Vos premiers pas</div>
+      <div class="toc-section" data-section="section-5-2">5.2 Cas pratique</div>
+      <div class="toc-section" data-section="section-5-3">5.3 Progression étape par étape</div>
+    </div>
+  </div>
+  
+    <div class="toc-chapter">
+    <div class="toc-chapter-title" data-section="Conclusion">
+      <span>Conclusion</span>
+    </div>
+  </div>
+  
+</nav>
+
+
+    <div class="header">
+        <!-- Geometric pattern overlay -->
+        <div style="position: absolute; inset: 0; opacity: 0.05;">
+            <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; border: 2px solid white; border-radius: 50%;"></div>
+            <div style="position: absolute; bottom: -100px; left: 10%; width: 400px; height: 400px; border: 2px solid white; border-radius: 50%;"></div>
+        </div>
+        
+        <div class="container header-content">
+            <!-- Badge -->
+            <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; padding: 8px 24px; margin-bottom: 32px;">
+                <span style="width: 8px; height: 8px; background: var(--gold-accent); border-radius: 50%; animation: pulse 2s infinite;"></span>
+                <span style="font-size: 14px; font-weight: 500; letter-spacing: 0.05em;">Initiative professionnelle</span>
+            </div>
+            
+            <!-- Main title -->
+            <h1 class="title" style="margin-bottom: 24px;">Label Confiance</h1>
+            
+            <!-- Subtitle -->
+            <p class="subtitle" style="margin-bottom: 48px; max-width: 900px;">
+                Guide d'accompagnement pour les cabinets d'avocats
+            </p>
+            
+            <!-- Meta information -->
+            <div class="header-meta" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
+                <span style="padding: 8px 16px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 8px; font-weight: 500;">Version 1.0</span>
+                <span style="opacity: 0.5;">•</span>
+                <span style="padding: 8px 16px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 8px;">Octobre 2025</span>
+                <span style="opacity: 0.5;">•</span>
+                <span style="padding: 8px 16px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 8px;">Document d'accompagnement</span>
+            </div>
+            
+            <!-- Call to action hint -->
+            <div style="margin-top: 48px; display: flex; align-items: center; gap: 12px; opacity: 0.7; font-size: 14px;">
+                <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+                <span>Découvrez la démarche ci-dessous</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom decorative wave -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 96px; background: linear-gradient(to top, #FFFFFF, transparent);"></div>
+</div>
+
+<style>
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    /* --------------------------- */
+/* Barre de progression en haut */
+/* --------------------------- */
+#progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  z-index: 9999;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  border-radius: 0 3px 3px 0;
+  transition: width 0.1s ease-out;
+}
+
+/* --------------------------- */
+/* Sommaire flottant */
+/* --------------------------- */
+#floating-toc {
+  position: fixed;
+  right: 30px;
+  top: 120px;
+  width: 280px;
+  max-height: calc(100vh - 160px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(10, 77, 146, 0.15);
+  padding: 25px;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border: 2px solid var(--trust-lighter);
+}
+
+#floating-toc.hidden {
+  transform: translateX(350px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --------------------------- */
+/* Bouton toggle du sommaire */
+/* --------------------------- */
+#toc-toggle {
+  position: fixed;
+  right: 30px;
+  top: 80px;
+  background: linear-gradient(135deg, var(--trust-blue), var(--trust-light));
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(10, 77, 146, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  z-index: 1001;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#toc-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(10, 77, 146, 0.4);
+}
+
+/* --------------------------- */
+/* Titres et sections du sommaire */
+/* --------------------------- */
+#floating-toc h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--trust-dark);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--trust-lighter);
+}
+
+.toc-chapter {
+  margin-bottom: 15px;
+}
+
+.toc-chapter-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--trust-blue);
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toc-chapter-title:hover {
+  background: var(--trust-lighter);
+}
+
+.toc-chapter-title.active {
+  background: var(--trust-blue);
+  color: white;
+}
+
+.toc-sections {
+  padding-left: 15px;
+  margin-top: 5px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.toc-sections.expanded {
+  max-height: 500px;
+}
+
+.toc-section {
+  font-size: 13px;
+  color: var(--text-medium);
+  padding: 6px 12px;
+  margin: 3px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+.toc-section:hover {
+  background: var(--background-alt);
+  border-left-color: var(--trust-light);
+  padding-left: 15px;
+}
+
+.toc-section.active {
+  background: var(--trust-lighter);
+  color: var(--trust-dark);
+  border-left-color: var(--trust-blue);
+  font-weight: 500;
+}
+
+.toc-chevron {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.toc-chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* --------------------------- */
+/* Scrollbar personnalisée */
+/* --------------------------- */
+#floating-toc::-webkit-scrollbar {
+  width: 6px;
+}
+
+#floating-toc::-webkit-scrollbar-track {
+  background: var(--background-alt);
+  border-radius: 10px;
+}
+
+#floating-toc::-webkit-scrollbar-thumb {
+  background: var(--trust-light);
+  border-radius: 10px;
+}
+
+#floating-toc::-webkit-scrollbar-thumb:hover {
+  background: var(--trust-blue);
+}
+
+/* --------------------------- */
+/* Responsive */
+/* --------------------------- */
+@media (max-width: 1400px) {
+  #floating-toc {
+    width: 240px;
+    right: 20px;
+  }
+}
+
+@media (max-width: 1200px) {
+  #floating-toc {
+    display: none;
+  }
+  #toc-toggle {
+    display: none;
+  }
+}
+
+    
+</style>
+
+    <div class="section">
+        <div class="container">
+            <div class="section-number">Chapitre 1</div>
+            <h2 id="section-1" class="section-title">Préface & Introduction générale</h2>
+            
+            <h3 id="section-1-1" class="section-subtitle">1.1 Message de bienvenue</h3>
+            
+            <div class="highlight-box">
+                <p><strong>Chers Maîtres,</strong></p>
+                <p>Nous sommes heureux de vous accueillir dans la démarche du Label Confiance, une initiative pensée par des professionnels du droit, pour des professionnels du droit.</p>
+            </div>
+            
+            <p>Ce guide n'est ni un audit froid, ni une liste de conformités bureaucratiques à cocher mécaniquement. C'est un outil d'accompagnement, conçu pour vous aider à construire ou à renforcer un environnement de travail où chacun — vous-même, vos associés, vos collaborateurs — peut exercer sereinement, avec dignité et engagement.</p>
+            
+            <p>Le métier d'avocat est exigeant. Il requiert rigueur intellectuelle, disponibilité constante et résilience émotionnelle. Mais cette exigence ne doit jamais se faire au détriment de l'humain. Nous savons que derrière chaque dossier, il y a des femmes et des hommes qui méritent respect, reconnaissance et bienveillance.</p>
+            
+            <div class="info-box">
+                <p><strong>Le Label Confiance part d'une conviction simple :</strong> un cabinet qui prend soin de ses équipes est un cabinet plus fort, plus créatif et plus pérenne. Ce n'est pas une utopie managériale, c'est une réalité observée dans les structures qui osent placer l'humain au cœur de leur projet professionnel.</p>
+            </div>
+            
+            <p>Nous vous invitons à parcourir ce guide avec curiosité et sincérité. Il ne s'agit pas d'atteindre la perfection immédiatement, mais d'engager une dynamique de progrès à votre rythme, selon vos réalités.</p>
+            
+            <p class="emphasis-strong">Bienvenue dans cette aventure collective.</p>
+            
+            <h3 id="section-1-2" class="section-subtitle">1.2 Pourquoi un Label basé sur la confiance ?</h3>
+            
+            <h4 class="section-subsubtitle">Le constat : une profession sous pression</h4>
+            
+            <p>La profession d'avocat traverse une période de mutations profondes. Les études le confirment : burn-out, turn-over élevé, difficultés de recrutement, désengagement... Les cabinets d'avocats ne sont pas épargnés par les défis humains qui touchent l'ensemble du monde du travail.</p>
+            
+            <p>Mais au-delà des statistiques, il y a des réalités quotidiennes :</p>
+            
+            <ul class="custom-list">
+                <li>Des collaborateurs qui arrivent le matin avec appréhension</li>
+                <li>Des tensions non exprimées qui grèvent l'efficacité collective</li>
+                <li>Des départs brutaux qui auraient pu être évités</li>
+                <li>Des talents qui choisissent d'autres voies, découragés par les conditions d'exercice</li>
+            </ul>
+            
+            <h4 class="section-subsubtitle">La confiance comme fondement</h4>
+
+<p>Pourquoi la confiance ? Parce qu'elle est le ciment invisible de toute organisation saine.</p>
+
+<div class="feature-grid">
+    <div class="feature-item">
+        <div class="feature-icon">1</div>
+        <div class="feature-title">Expression sans jugement</div>
+        <div class="feature-text">Savoir que l'on peut exprimer une difficulté sans être jugé</div>
+    </div>
+    <div class="feature-item">
+        <div class="feature-icon">2</div>
+        <div class="feature-title">Reconnaissance équitable</div>
+        <div class="feature-text">Croire que l'effort fourni sera reconnu équitablement</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">3</div>
+                    <div class="feature-title">Droit à l'initiative</div>
+                    <div class="feature-text">Pouvoir prendre une initiative sans craindre une sanction disproportionnée</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">4</div>
+                    <div class="feature-title">Considération humaine</div>
+                    <div class="feature-text">Se sentir considéré comme une personne, pas seulement comme un producteur d'heures facturables</div>
+                </div>
+            </ul>
+            
+ <div class="highlight-box">
+    <p><strong>Un cabinet fondé sur la confiance n'est pas un cabinet "bisounours" où tout le monde s'aime.</strong> C'est un cabinet où les relations professionnelles sont saines, transparentes et respectueuses, permettant à chacun de donner le meilleur de lui-même.</p>
+</div>
+
+</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h4 class="section-subsubtitle">Une démarche volontaire et positive</h4>
+            
+            <p>Le Label Confiance n'est pas une sanction ni une obligation. C'est un engagement volontaire qui dit : "Notre cabinet reconnaît l'importance du facteur humain et s'engage à progresser concrètement dans cette voie."</p>
+            
+            <p>Il ne s'agit pas de stigmatiser les cabinets qui ne l'obtiennent pas, mais de valoriser ceux qui osent se questionner, se remettre en cause et agir.</p>
+            
+            <h3 id="section-1-3" class="section-subtitle">1.3 L'esprit du Label : sincérité, équilibre, authenticité, progression</h3>
+            
+            <p>Le Label Confiance repose sur quatre valeurs cardinales qui guident toute la démarche :</p>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">VALEUR 1</div>
+                <h4 class="pillar-title">Sincérité</h4>
+                <p>Nous privilégions l'honnêteté sur l'apparence. Il vaut mieux reconnaître une difficulté et s'engager à la résoudre, que de présenter une façade parfaite mais artificielle.</p>
+                <p>Le Label n'attend pas de vous que vous soyez irréprochable. Il attend que vous soyez lucide et authentique dans votre auto-évaluation.</p>
+                <div class="info-box">
+                    <p><strong>Exemple concret :</strong> Un cabinet qui reconnaît avoir des difficultés sur l'équilibre vie professionnelle/vie personnelle, mais qui met en place des mesures progressives (télétravail partiel, révision de la charge horaire) est plus dans l'esprit du Label qu'un cabinet qui nie tout problème.</p>
+                </div>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">VALEUR 2</div>
+                <h4 class="pillar-title">Équilibre</h4>
+                <p>Le Label cherche un équilibre juste entre :</p>
+                <ul class="custom-list">
+                    <li>Les impératifs économiques et les besoins humains</li>
+                    <li>L'exigence professionnelle et le respect des limites de chacun</li>
+                    <li>La performance collective et l'épanouissement individuel</li>
+                </ul>
+                <p>Nous ne demandons pas aux cabinets de renoncer à leurs ambitions ou à leur rentabilité. Nous affirmons simplement qu'excellence professionnelle et bien-être ne sont pas contradictoires — ils se renforcent mutuellement.</p>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">VALEUR 3</div>
+                <h4 class="pillar-title">Authenticité</h4>
+                <p>Chaque cabinet a sa culture, son histoire, sa taille, ses contraintes. Le Label Confiance n'impose pas un modèle unique. Il propose un cadre adaptable que chaque structure peut s'approprier selon sa réalité.</p>
+                <p>Un cabinet de 3 personnes spécialisé en droit pénal n'aura pas les mêmes enjeux qu'une structure de 50 collaborateurs en droit des affaires. Les actions concrètes seront différentes, mais l'intention reste commune : placer l'humain au centre.</p>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">VALEUR 4</div>
+                <h4 class="pillar-title">Progression</h4>
+                <p>Le Label n'est pas une photographie figée, c'est un chemin. Nous valorisons la dynamique de progrès plus que l'état initial.</p>
+                <p>Un cabinet peut obtenir le Label en étant "imparfait", à condition de montrer :</p>
+                <ul class="custom-list">
+                    <li>Une conscience claire de ses axes d'amélioration</li>
+                    <li>Des engagements concrets pour progresser</li>
+                    <li>Une mise en œuvre effective, même progressive</li>
+                </ul>
+                <p><strong>Le Label Confiance accompagne la transformation, il ne la sanctionne pas.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h3 id="section-1-4" class="section-subtitle">1.4 Objectifs et bénéfices pour le cabinet</h3>
+            <h4 class="section-subsubtitle">Pour le cabinet : des bénéfices tangibles</h4>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">1</div>
+                    <div class="feature-title">Attractivité renforcée</div>
+                    <div class="feature-text">Dans un marché tendu du recrutement, le Label Confiance est un signal fort envoyé aux candidats : "Ici, on ne considère pas les collaborateurs comme des ressources interchangeables."</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">2</div>
+                    <div class="feature-title">Fidélisation des talents</div>
+                    <div class="feature-text">Former un collaborateur coûte cher en temps et en énergie. Un environnement de confiance réduit drastiquement le turn-over et préserve le capital de compétences du cabinet.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">3</div>
+                    <div class="feature-title">Performance collective améliorée</div>
+                    <div class="feature-text">Des équipes sereines sont des équipes efficaces. La confiance réduit les tensions parasites, libère la créativité et favorise la coopération spontanée.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">4</div>
+                    <div class="feature-title">Image professionnelle valorisée</div>
+                    <div class="feature-text">Le Label Confiance renforce votre réputation auprès des clients, des partenaires et des institutions (CNB, Ordre, médias spécialisés).</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">5</div>
+                    <div class="feature-title">Prévention des risques</div>
+                    <div class="feature-text">Un management respectueux et une attention au bien-être préviennent les situations de crise : harcèlement, burn-out, contentieux prud'homaux, bad buzz sur les réseaux sociaux...</div>
+                </div>
+            </div>
+            
+            <h4 class="section-subsubtitle">Pour les collaborateurs : un quotidien transformé</h4>
+            
+            <p>Le Label n'est pas qu'une démarche "top-down". Les collaborateurs bénéficient directement :</p>
+            
+            <ul class="custom-list">
+                <li><strong>Une parole écoutée :</strong> leurs ressentis sont pris en compte</li>
+                <li><strong>Une transparence accrue :</strong> ils comprennent les orientations du cabinet</li>
+                <li><strong>Une reconnaissance explicite :</strong> le cabinet affirme publiquement leur importance</li>
+                <li><strong>Une amélioration concrète de leurs conditions de travail</strong></li>
+            </ul>
+            
+            <h4 class="section-subsubtitle">Pour vous, dirigeant : une sérénité retrouvée</h4>
+            
+            <p>Diriger un cabinet est éprouvant. Le Label Confiance vous aide à :</p>
+            
+            <div class="action-grid">
+                <div class="action-card">
+                    <div class="action-title">Clarifier votre vision managériale</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-title">Anticiper les tensions avant qu'elles ne deviennent des crises</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-title">Légitimer vos décisions par un cadre structuré</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-title">Vous sentir aligné entre vos valeurs personnelles et vos pratiques professionnelles</div>
+                </div>
+            </div>
+            
+            <h3 id="section-1-5" class="section-subtitle">1.5 Différence avec une certification ou un audit : accompagnement et engagement</h3>
+            
+            <h4 class="section-subsubtitle">Ce que le Label Confiance n'est PAS</h4>
+            
+            <div class="warning-box">
+                <ul class="custom-list">
+                    <li>❌ Ce n'est pas une norme ISO avec des procédures standardisées rigides</li>
+                    <li>❌ Ce n'est pas un audit comptable avec des contrôleurs externes fouillant vos dossiers</li>
+                    <li>❌ Ce n'est pas une notation avec un classement public des "bons" et "mauvais" cabinets</li>
+                    <li>❌ Ce n'est pas un label RH générique ignorant les spécificités de la profession d'avocat</li>
+                </ul>
+            </div>
+            
+            <h4 class="section-subsubtitle">Ce que le Label Confiance EST</h4>
+            
+            <div class="success-box">
+                <ul class="custom-list">
+                    <li>✅ Un accompagnement personnalisé : nous comprenons que chaque cabinet est unique</li>
+                    <li>✅ Une démarche d'engagement volontaire : vous choisissez d'entrer dans cette dynamique</li>
+                    <li>✅ Un référentiel adaptable : les critères sont indicatifs, pas prescriptifs</li>
+                    <li>✅ Un processus bienveillant : nous valorisons les efforts et la sincérité</li>
+                    <li>✅ Un outil de progrès continu : le Label se renouvelle et évolue avec vous</li>
+                </ul>
+            </div>
+            
+            <h4 class="section-subsubtitle">Une philosophie de l'accompagnement</h4>
+            
+            <p>Le Label Confiance ne cherche pas à vous juger, mais à vous épauler.</p>
+            
+            <p>Concrètement :</p>
+            
+            <ul class="custom-list">
+                <li>Vous recevez ce guide complet avec les 7 piliers détaillés</li>
+                <li>Vous procédez à un auto-positionnement honnête</li>
+                <li>Vous rédigez votre réponse et vos engagements</li>
+                <li>Nous échangeons avec vous pour affiner, conseiller, ajuster</li>
+                <li>Vous mettez en œuvre progressivement vos actions</li>
+            </ul>
+            
+            <div class="info-box">
+                <p><strong>Il n'y a pas de "piège".</strong> Si vous identifiez une faiblesse, ce n'est pas éliminatoire. Au contraire, c'est le point de départ d'un plan d'action accompagné.</p>
+            </div>
+            
+            <h4 class="section-subsubtitle">L'engagement mutuel</h4>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">V</div>
+                    <div class="feature-title">Votre engagement</div>
+                    <div class="feature-text">Agir concrètement, même par petits pas, pour améliorer les relations humaines et les conditions de travail dans votre cabinet.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">N</div>
+                    <div class="feature-title">Notre engagement</div>
+                    <div class="feature-text">Vous soutenir dans cette démarche avec bienveillance, pragmatisme et confidentialité.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="section-number">Chapitre 2</div>
+            <h2 id="section-2" class="section-title">La démarche Label Confiance</h2>
+            
+            <h3 id="section-2-1" class="section-subtitle">2.1 Principes fondateurs</h3>
+            
+            <p>Le Label Confiance repose sur deux piliers méthodologiques essentiels qui garantissent sa pertinence et son efficacité.</p>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">PRINCIPE 1</div>
+                <h4 class="pillar-title">Cohérence interne/externe</h4>
+                <p>Un cabinet ne peut prétendre défendre les droits de ses clients avec conviction si, en interne, il ne respecte pas les principes élémentaires de dignité et de justice dans les relations humaines.</p>
+                <div class="criteria-section">
+                    <div class="criteria-title">Cohérence interne</div>
+                    <p>Vos valeurs affichées correspondent-elles à vos pratiques quotidiennes ? Vos collaborateurs vivent-ils réellement ce que votre plaquette commerciale promet ?</p>
+                </div>
+                <div class="criteria-section">
+                    <div class="criteria-title">Cohérence externe</div>
+                    <p>Votre engagement envers vos clients et la société reflète-t-il votre engagement envers vos équipes ?</p>
+                </div>
+                <p>Cette double cohérence est le gage de l'authenticité de votre démarche. Elle construit une réputation solide et durable, bien au-delà d'une simple opération de communication.</p>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">PRINCIPE 2</div>
+                <h4 class="pillar-title">Démarche progressive</h4>
+                <p>Le Label Confiance n'exige pas la perfection immédiate. Il valorise une dynamique d'amélioration continue.</p>
+                <p>Trois principes guident cette progressivité :</p>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">1</div>
+                        <div class="action-title">Partir de là où vous êtes</div>
+                        <div class="action-text">Chaque cabinet a son histoire, ses contraintes, ses forces. Il n'y a pas de jugement sur le point de départ, seulement sur la volonté d'avancer.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">2</div>
+                        <div class="action-title">Avancer à votre rythme</div>
+                        <div class="action-text">Certains cabinets pourront mettre en place des changements rapides, d'autres auront besoin de plusieurs mois. L'essentiel est que le mouvement soit réel et sincère.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">3</div>
+                        <div class="action-title">Célébrer les étapes</div>
+                        <div class="action-text">Chaque progrès compte. Une première réunion d'équipe mensuelle instaurée, un entretien individuel systématisé, une politique de télétravail définie : ce sont autant de victoires qui construisent la transformation.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 id="section-2-2" class="section-subtitle">2.2 Étapes pour le cabinet</h3>
+            
+            <p>Voici le parcours concret que vous allez suivre pour obtenir et maintenir le Label Confiance.</p>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ÉTAPE 1</div>
+                <h4 class="pillar-title">Réception et appropriation du guide</h4>
+                <p>Vous recevez ce guide complet qui détaille les 7 piliers du Label, avec pour chacun :</p>
+                <ul class="custom-list">
+                    <li>Les critères indicatifs de référence</li>
+                    <li>Des bonnes pratiques inspirantes</li>
+                    <li>Des pistes d'action concrètes adaptables</li>
+                </ul>
+                <div class="info-box">
+                    <p><strong>Temps recommandé :</strong> Prenez 2 à 3 semaines pour lire attentivement le guide, l'annoter, le partager éventuellement avec vos associés.</p>
+                </div>
+                <div class="success-box">
+                    <p><strong>Action clé :</strong> Organisez une première réunion interne pour présenter la démarche à l'ensemble de l'équipe. La transparence dès le départ est essentielle.</p>
+                </div>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ÉTAPE 2</div>
+                <h4 class="pillar-title">Auto-positionnement du cabinet</h4>
+                <p>Avant même de consulter vos collaborateurs, vous réalisez une auto-évaluation honnête de votre cabinet sur chacun des 7 piliers.</p>
+                <p><strong>Questions à vous poser :</strong></p>
+                <ul class="custom-list">
+                    <li>Quelles sont nos forces actuelles ?</li>
+                    <li>Quels sont nos points aveugles ?</li>
+                    <li>Quelles difficultés rencontrons-nous régulièrement ?</li>
+                    <li>Quelles améliorations avons-nous déjà tentées ? Avec quels résultats ?</li>
+                </ul>
+                <div class="info-box">
+                    <p><strong>Outil fourni :</strong> Utilisez les auto-questionnaires de la section 4 pour structurer votre réflexion.</p>
+                </div>
+                <div class="warning-box">
+                    <p><strong>Conseil :</strong> Si vous êtes plusieurs associés, faites cet exercice individuellement puis confrontez vos visions. Les divergences de perception sont souvent riches d'enseignements.</p>
+                </div>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ÉTAPE 3</div>
+                <h4 class="pillar-title">Rédaction de votre réponse et de vos engagements</h4>
+                <p>Sur la base de votre auto-évaluation, vous rédigez un document structuré qui sera votre candidature au Label Confiance.</p>
+                <p><strong>Structure attendue :</strong></p>
+                <ul class="custom-list">
+                    <li><strong>Introduction :</strong> Présentation du cabinet, motivations pour la démarche</li>
+                    <li><strong>Auto-diagnostic :</strong> Votre analyse pilier par pilier</li>
+                    <li><strong>Engagements concrets :</strong> Pour chaque pilier, 2 à 5 actions précises avec calendrier</li>
+                    <li><strong>Indicateurs de suivi :</strong> Comment mesurerez-vous les progrès ?</li>
+                    <li><strong>Conclusion :</strong> Vision à 1 an, à 3 ans</li>
+                </ul>
+                <div class="warning-box">
+                    <p><strong>Attention :</strong> Soyez réaliste dans vos engagements. Mieux vaut promettre 3 actions tenues que 10 actions abandonnées.</p>
+                </div>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ÉTAPE 4</div>
+                <h4 class="pillar-title">Mise en conformité progressive (avec conseils)</h4>
+                <p>Une fois vos engagements formalisés, commence la phase de mise en œuvre. C'est ici que la transformation réelle s'opère.</p>
+                <p><strong>Conseils pour planifier la mise en œuvre :</strong></p>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Conseil 1</div>
+                        <div class="action-title">Impliquez vos équipes dès le départ</div>
+                        <div class="action-text">Ne concevez pas votre plan d'action seul dans votre bureau. Associez vos collaborateurs, notamment ceux qui occupent des postes-clés.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 2</div>
+                        <div class="action-title">Communiquez, encore et toujours</div>
+                        <div class="action-text">Le changement génère de l'inquiétude. La communication est votre meilleure alliée contre les résistances. Communiquez au minimum mensuellement pendant la première année.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 3</div>
+                        <div class="action-title">Nommez un référent Label</div>
+                        <div class="action-text">Désignez une personne (vous-même ou un collaborateur volontaire) qui sera le "porteur" de la démarche Label au quotidien.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 4</div>
+                        <div class="action-title">Documentez vos actions</div>
+                        <div class="action-text">Tenez un journal de bord de votre démarche : date de chaque action, participants, résultats observables, retours spontanés des collaborateurs.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 5</div>
+                        <div class="action-title">Célébrez les victoires</div>
+                        <div class="action-text">Chaque progrès mérite d'être souligné et célébré collectivement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 6</div>
+                        <div class="action-title">Acceptez les échecs temporaires</div>
+                        <div class="action-text">Toute transformation comporte des ratés. Le Label Confiance ne pénalise pas les échecs honnêtes. Il pénalise l'immobilisme et le renoncement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Conseil 7</div>
+                        <div class="action-title">Inspirez-vous des autres</div>
+                        <div class="action-text">Profitez de la communauté des cabinets labellisés pour échanger bonnes pratiques et retours d'expérience.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 id="section-2-3" class="section-subtitle">2.3 Rôle du référentiel : critères indicatifs et marge d'adaptation</h3>
+            
+            <h4 class="section-subsubtitle">Un cadre, pas un carcan</h4>
+            
+            <p>Le référentiel du Label Confiance propose pour chaque pilier des critères indicatifs. Comprenez bien le terme : <strong>indicatif</strong>, pas impératif.</p>
+            
+            <p><strong>Pourquoi cette souplesse ?</strong></p>
+            
+            <p>Parce qu'un cabinet de 2 avocats en zone rurale et un cabinet de 40 collaborateurs à Paris n'ont ni les mêmes ressources, ni les mêmes enjeux, ni les mêmes contraintes organisationnelles.</p>
+            
+            <div class="info-box">
+                <p><strong>Exemple concret :</strong> Le pilier 1 mentionne "réunions d'équipe régulières". Pour un grand cabinet, cela peut signifier une réunion mensuelle par département. Pour un petit cabinet, cela peut être un déjeuner d'équipe hebdomadaire informel. Les deux répondent à l'esprit du critère : créer des espaces de dialogue.</p>
+            </div>
+            
+            <h4 class="section-subsubtitle">La notion de proportionnalité</h4>
+            
+            <p>Le Label applique un principe de proportionnalité :</p>
+            
+            <ul class="custom-list">
+                <li>On n'attend pas d'un cabinet de 3 personnes qu'il ait un DRH dédié</li>
+                <li>On n'attend pas d'un cabinet créé il y a 6 mois qu'il ait 5 ans de recul sur son turn-over</li>
+                <li>On n'attend pas d'un cabinet en difficulté économique qu'il offre les mêmes avantages qu'une structure prospère</li>
+            </ul>
+            
+            <div class="emphasis-strong">
+                <p><strong>Ce qui compte :</strong> l'intention, l'effort, la cohérence entre vos moyens et vos actions.</p>
+            </div>
+            
+            <h4 class="section-subsubtitle">Adaptation culturelle et sectorielle</h4>
+            
+            <p>Certains critères peuvent être ajustés selon :</p>
+            
+            <ul class="custom-list">
+                <li>Votre domaine de spécialité</li>
+                <li>Votre histoire et vos valeurs propres</li>
+                <li>Les spécificités géographiques ou culturelles de votre implantation</li>
+            </ul>
+            
+            <p><strong>L'essentiel :</strong> respecter l'esprit de chaque pilier, même si la forme varie.</p>
+            
+            <h3 id="section-2-4" class="section-subtitle">2.4 Engagement attendu : agir concrètement, même par étapes</h3>
+            
+            <h4 class="section-subsubtitle">Ce que signifie "s'engager"</h4>
+            
+            <p>S'engager dans le Label Confiance, c'est :</p>
+            
+            <ul class="custom-list">
+                <li>Reconnaître que l'humain est central dans la réussite de votre cabinet.</li>
+                <li>Accepter de vous remettre en question, d'écouter les critiques constructives, d'identifier vos marges de progrès.</li>
+                <li>Agir concrètement pour transformer vos intentions en réalité.</li>
+                <li>Persévérer même quand c'est difficile, même quand les résultats ne sont pas immédiats.</li>
+            </ul>
+            
+            <h4 class="section-subsubtitle">Des actions, pas des déclarations</h4>
+            
+            <p>Le Label Confiance se méfie des belles paroles non suivies d'effets. Nous valorisons les actions tangibles, même modestes.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Exemples d'actions concrètes :</strong></p>
+                <ul class="custom-list">
+                    <li>Mettre en place un entretien individuel annuel pour chaque collaborateur</li>
+                    <li>Instaurer une réunion mensuelle où chacun peut s'exprimer</li>
+                    <li>Définir une charte claire sur les horaires et le droit à la déconnexion</li>
+                    <li>Former les managers aux techniques d'écoute active</li>
+                    <li>Créer une boîte à idées pour recueillir les suggestions</li>
+                </ul>
+            </div>
+            
+            <p>Ces actions peuvent sembler simples. Elles le sont. Mais elles font la différence au quotidien.</p>
+            
+            <h4 class="section-subsubtitle">Le droit de progresser par étapes</h4>
+            
+            <p>Vous ne pourrez pas tout faire en même temps. C'est normal et attendu.</p>
+            
+            <p><strong>Priorisez selon :</strong></p>
+            
+            <ul class="custom-list">
+                <li><strong>L'urgence</strong> (situations de souffrance avérée)</li>
+                <li><strong>L'impact</strong> (actions qui touchent le plus de personnes)</li>
+                <li><strong>La faisabilité</strong> (quick wins vs. chantiers longs)</li>
+            </ul>
+            
+            <p><strong>Planifiez sur 3 horizons temporels :</strong></p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">0-3</div>
+                    <div class="feature-title">Court terme (0-3 mois)</div>
+                    <div class="feature-text">Actions rapides et symboliques fortes</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">3-12</div>
+                    <div class="feature-title">Moyen terme (3-12 mois)</div>
+                    <div class="feature-text">Changements structurels progressifs</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">1-3</div>
+                    <div class="feature-title">Long terme (1-3 ans)</div>
+                    <div class="feature-text">Transformations culturelles profondes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="section-number">Chapitre 3</div>
+            <h2 id="section-3" class="section-title">Les 7 piliers du Label Confiance</h2>
+            
+            <div id="pilier-1" class="pillar-card">
+                <div class="pillar-number">PILIER 1</div>
+                <h3 class="pillar-title">Relations humaines et communication interne</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>Les relations humaines constituent le socle de tout cabinet fonctionnel. Dans un cabinet d'avocats, contrairement à d'autres secteurs, les collaborateurs travaillent souvent de manière isolée sur leurs dossiers. Cette atomisation peut créer :</p>
+                
+                <ul class="custom-list">
+                    <li>Un sentiment de solitude professionnelle</li>
+                    <li>Des incompréhensions sur les orientations stratégiques du cabinet</li>
+                    <li>Des tensions larvées qui explosent au moment des échéances critiques</li>
+                    <li>Un manque de cohésion d'équipe nuisant à l'intelligence collective</li>
+                </ul>
+                
+                <p>La communication interne de qualité n'est pas un luxe, c'est une nécessité vitale.</p>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Transformer votre cabinet d'une juxtaposition d'individualités en une véritable équipe solidaire.
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Réunions régulières favorisant le dialogue</div>
+                    <ul class="criteria-list">
+                        <li>Des réunions d'équipe sont organisées à fréquence régulière (mensuelle, bimensuelle selon la taille)</li>
+                        <li>Ces réunions ne sont pas que descendantes mais aussi ascendantes (écoute des préoccupations)</li>
+                        <li>Tous les membres de l'équipe peuvent s'exprimer, quels que soient leur statut et leur ancienneté</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Mécanismes d'écoute active</div>
+                    <ul class="criteria-list">
+                        <li>Des points individuels réguliers permettent des échanges confidentiels</li>
+                        <li>Une boîte à idées permet de recueillir suggestions et préoccupations de manière anonyme si besoin</li>
+                        <li>Des moments d'échange informels sont favorisés (pauses café, déjeuners d'équipe...)</li>
+                        <li>Des échanges confidentiels sont possibles avec la hiérarchie ou un tiers de confiance</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Clarté et transparence dans la transmission des informations</div>
+                    <ul class="criteria-list">
+                        <li>Les décisions importantes du cabinet sont expliquées et contextualisées</li>
+                        <li>Les objectifs collectifs et individuels sont clairement communiqués</li>
+                        <li>Les difficultés éventuelles du cabinet ne sont pas cachées mais partagées avec honnêteté</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Responsabilisation des collaborateurs</div>
+                    <ul class="criteria-list">
+                        <li>Les collaborateurs sont consultés sur les décisions qui les concernent directement</li>
+                        <li>Leur autonomie est encouragée dans leur périmètre de compétence</li>
+                        <li>Ils sont associés à la réflexion sur l'organisation du cabinet</li>
+                        <li>Implication dans le projet d'entreprise : chacun comprend comment son travail contribue au projet collectif</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">5. La qualité de l'engagement</div>
+                    <ul class="criteria-list">
+                        <li>Compréhension et acceptation des différences et de la fragilité de chacun</li>
+                        <li>Dialogue et échange authentiques</li>
+                        <li>Implication dans son travail et dans le projet de l'entreprise</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">6. Processus de gestion des conflits</div>
+                    <ul class="criteria-list">
+                        <li>Culture du dialogue ouvert : il est possible d'exprimer un désaccord sans crainte de représailles</li>
+                        <li>Les tensions sont abordées directement plutôt que laissées pourrir en non-dits</li>
+                        <li>Mécanisme clair de médiation en cas de conflit</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Instaurer le respect mutuel comme règle d'or (Institut Repère)</div>
+                        <div class="action-text">Le respect n'est pas négociable. Il s'exprime dans les mots, les gestes, les attitudes. Un collaborateur senior ne parle pas différemment à une assistante qu'à un associé.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Pratiquer l'assertivité (Institut Repère)</div>
+                        <div class="action-text">L'assertivité, c'est cette capacité à exprimer son point de vue avec fermeté tout en respectant celui des autres. Former vos équipes à l'assertivité transforme radicalement la qualité des échanges.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Développer l'intelligence émotionnelle (Institut Repère)</div>
+                        <div class="action-text">Savoir identifier ses propres émotions et celles des autres, savoir les nommer et les gérer : voilà une compétence essentielle en management.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Comprendre et accepter les différences (Institut Repère)</div>
+                        <div class="action-text">Chaque personne a son histoire, ses fragilités, son rythme. Un collaborateur introverti ne s'exprimera pas spontanément en réunion plénière : prévoyez des canaux alternatifs.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Le dialogue ouvert comme réflexe (Institut Repère)</div>
+                        <div class="action-text">Ne communiquez pas seulement quand il y a un problème. Instaurez une habitude de dialogue permanent, créant une culture où parler devient naturel.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">La réunion d'équipe mensuelle non négociable</div>
+                        <div class="action-text">Fixez un créneau récurrent (ex : premier lundi du mois, 9h-10h). Préparez un ordre du jour partagé où chacun peut inscrire un point. Terminez toujours par un tour de table libre.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">L'entretien individuel semestriel structuré</div>
+                        <div class="action-text">Bloquez 1h par collaborateur, sans interruption. Utilisez une trame : bilan, projets, besoins de formation, ressenti, suggestions. Laissez le collaborateur parler 70% du temps.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">La boîte à idées accessible</div>
+                        <div class="action-text">Installez une boîte physique ou créez une adresse email dédiée. Garantissez l'anonymat si souhaité. Engagez-vous à répondre publiquement une fois par trimestre.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">Le déjeuner d'équipe mensuel informel</div>
+                        <div class="action-text">Un moment sans ordre du jour, juste pour se retrouver humainement. Ces moments informels créent des liens qui facilitent la communication professionnelle.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">La formation à la communication non-violente</div>
+                        <div class="action-text">Investissez dans une formation collective (1 à 2 jours). Apprenez ensemble à exprimer des besoins sans agresser, à recevoir des critiques sans se braquer.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Le "quart d'heure sécurité émotionnelle"</div>
+                        <div class="action-text">En début de réunion d'équipe, tour de table : "Comment allez-vous vraiment aujourd'hui ?" Cela normalise l'expression des difficultés et crée une vigilance collective.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">La charte de communication interne</div>
+                        <div class="action-text">Co-rédigez avec l'équipe une charte simple : délais de réponse, usage du téléphone, gestion des urgences, ton des échanges...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="pilier-2" class="pillar-card">
+                <div class="pillar-number">PILIER 2</div>
+                <h3 class="pillar-title">Management éthique et respectueux</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>Le management est la colonne vertébrale de tout cabinet. Un bon management crée une dynamique positive où chacun donne le meilleur de lui-même.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>La double dimension du management :</strong></p>
+                    <p><strong>Les managers (collaborateurs seniors, chefs d'équipe) :</strong> C'est la courroie de transmission entre la direction et les employés. Ils vivent une double pression : répondre aux exigences de la direction tout en prenant soin de leurs équipes.</p>
+                    <p><strong>Les dirigeants et associés :</strong> C'est la tête qui donne le ton, qui montre l'exemple et qui détermine la culture, l'ambiance, la qualité des relations humaines dans l'entreprise.</p>
+                </div>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Faire du management une fonction noble, au service de l'épanouissement des personnes ET de la performance du cabinet.
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">Pour les managers</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Les dispositions d'esprit essentielles</div>
+                    <ul class="criteria-list">
+                        <li>Empathie : capacité à se mettre à la place des collaborateurs</li>
+                        <li>Discernement : savoir distinguer l'essentiel de l'accessoire</li>
+                        <li>Éthique personnelle : exemplarité dans le respect des règles et des personnes</li>
+                        <li>Curiosité : s'intéresser sincèrement aux personnes au-delà de leur production</li>
+                        <li>Créativité : trouver des solutions adaptées aux situations particulières</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. La qualité d'exercice du management</div>
+                    <ul class="criteria-list">
+                        <li>Compréhension : prendre le temps d'écouter avant de juger</li>
+                        <li>Bienveillance et inclusion : présumer de la bonne foi, encourager, intégrer les particularités de chacun (handicap, situation familiale...)</li>
+                        <li>Acceptation du droit à l'erreur et à l'imperfection : l'erreur est une opportunité d'apprentissage</li>
+                        <li>Veille active du bien-être et du mal-être : être attentif aux signaux sans attendre la crise</li>
+                        <li>Encouragement et reconnaissance du travail accompli : souligner régulièrement le travail bien fait</li>
+                        <li>Égalité de traitement : pas de favoritisme, pas de bouc émissaire</li>
+                        <li>Soutien, aide et coaching : accompagner le développement des compétences</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Absence de pratiques abusives ou harcèlement</div>
+                    <ul class="criteria-list">
+                        <li>Aucun harcèlement moral ou sexuel</li>
+                        <li>Aucune discrimination</li>
+                        <li>Aucune violence verbale ou physique</li>
+                        <li>Aucune pression psychologique illégitime</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Prise de décision respectueuse de la dignité</div>
+                    <ul class="criteria-list">
+                        <li>Les décisions difficiles sont prises avec humanité</li>
+                        <li>Les explications sont données clairement</li>
+                        <li>La personne concernée peut s'exprimer et être entendue</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">Pour les dirigeants et associés</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. L'alliance : affirmer la primauté de l'humain</div>
+                    <ul class="criteria-list">
+                        <li>Affirmation de la primauté du facteur humain sur tous les autres éléments de l'entreprise pour créer de la valeur</li>
+                        <li>Implication personnelle des dirigeants dans les relations humaines (temps et énergie consacrés)</li>
+                        <li>Impliquer tous les membres de l'entreprise dans le projet d'entreprise</li>
+                        <li>Permettre à chacun d'avoir un impact mesurable et reconnu sur le projet</li>
+                        <li>Affirmation de la communauté d'intérêt in fine entre l'entreprise et ses employés</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. La justice : équité dans les pratiques</div>
+                    <ul class="criteria-list">
+                        <li>Rémunération juste de chacun, au niveau du marché</li>
+                        <li>Récompense de la performance et partage équitable de la création de valeur</li>
+                        <li>Formation des dirigeants et managers aux relations humaines</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. La mission : créer un environnement épanouissant</div>
+                    <ul class="criteria-list">
+                        <li>Engagement assumé à créer un environnement de travail qui améliore la satisfaction et le bien-être</li>
+                        <li>Objectif : permettre à chacun de s'épanouir et d'approcher son plein potentiel</li>
+                        <li>Conviction que cet épanouissement individuel bénéficie à l'équipe et au cabinet</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Le manager comme médiateur, pas comme juge (Institut Repère)</div>
+                        <div class="action-text">Un bon manager facilite la résolution des problèmes, aide les personnes à progresser, crée les conditions de la coopération.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'acceptation du droit à l'erreur (Institut Repère)</div>
+                        <div class="action-text">Créer un climat où l'on peut signaler les erreurs rapidement pour les corriger collectivement, plutôt qu'un climat de peur où on les cache.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'écoute des fragilités (Institut Repère)</div>
+                        <div class="action-text">Un manager humain repère les moments difficiles et adapte temporairement les exigences sans stigmatiser la personne.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La formation continue au management</div>
+                        <div class="action-text">Le management ne s'improvise pas. Formez-vous, formez vos managers : gestion des conflits, conduite d'entretien, feedback constructif, prévention des RPS.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'exemplarité des dirigeants</div>
+                        <div class="action-text">Si vous voulez que vos collaborateurs respectent les horaires raisonnables, vous devez vous-même ne pas envoyer d'emails à 23h.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">Formation managériale obligatoire</div>
+                        <div class="action-text">Identifiez tous les collaborateurs qui ont une fonction d'encadrement. Inscrivez-les à une formation de 2-3 jours sur le management bienveillant.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">Le feedback constructif systématisé</div>
+                        <div class="action-text">Formez vos managers à la technique du feedback sandwich. Bannissez les critiques humiliantes ou vagues. Privilégiez les critiques factuelles et actionnables.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">La charte managériale co-construite</div>
+                        <div class="action-text">Organisez un atelier avec tous les managers : Qu'est-ce qu'un bon manager dans notre cabinet ? Formalisez les principes partagés dans une charte courte (1 page).</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">Le 360° feedback annuel</div>
+                        <div class="action-text">Chaque manager reçoit un retour anonymisé de ses collaborateurs. Ce retour est un outil de progression personnelle, pas une punition.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">La cellule d'écoute externe</div>
+                        <div class="action-text">Dispositif où les collaborateurs peuvent signaler confidentiellement une situation problématique.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Les "one-on-one" réguliers</div>
+                        <div class="action-text">Point individuel de 30 minutes avec chaque collaborateur, une fois par mois. Pas de formalisme, juste un moment d'échange.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">L'engagement public des associés</div>
+                        <div class="action-text">Les associés affirment solennellement leur engagement sur le facteur humain. Cet engagement public crée une responsabilité et un cap clair.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 8</div>
+                        <div class="action-title">La transparence sur les rémunérations</div>
+                        <div class="action-text">Publiez une grille de rémunération claire. Expliquez les critères d'attribution des primes.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilier-3" class="pillar-card">
+                <div class="pillar-number">PILIER 3</div>
+                <h3 class="pillar-title">Bien-être et santé mentale</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>Le bien-être au travail n'est pas un concept fumeux. C'est une réalité tangible qui se mesure à des indicateurs simples : les gens arrivent-ils le matin avec entrain ou avec appréhension ?</p>
+                
+                <div class="warning-box">
+                    <p><strong>La profession d'avocat est à risque</strong></p>
+                    <p>Les études confirment : les avocats figurent parmi les professions les plus touchées par le burn-out, l'anxiété et la dépression.</p>
+                </div>
+                
+                <p><strong>Agir sur le bien-être, c'est :</strong></p>
+                
+                <ul class="custom-list">
+                    <li>Préserver votre actif le plus précieux : des équipes en bonne santé</li>
+                    <li>Améliorer la performance durable</li>
+                    <li>Créer une culture de prévention plutôt que de gestion de crise</li>
+                </ul>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Suivi des conditions de travail</div>
+                    <ul class="criteria-list">
+                        <li>Évaluation régulière de la charge de travail</li>
+                        <li>Attention aux conditions matérielles : qualité des bureaux, ergonomie, luminosité</li>
+                        <li>Identification et correction des facteurs de stress évitables</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. La responsabilité de soi</div>
+                    <ul class="criteria-list">
+                        <li>Développement personnel : formation continue, lectures, conférences</li>
+                        <li>Santé physique : possibilité de prendre des pauses, encouragement à l'activité physique</li>
+                        <li>Santé mentale : déstigmatisation des difficultés psychologiques, accès à du soutien</li>
+                        <li>Employabilité : formations, certifications, montée en compétences</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Équilibre vie professionnelle / vie personnelle</div>
+                    <ul class="criteria-list">
+                        <li>Charge de travail raisonnable</li>
+                        <li>Droit effectif à la déconnexion (pas d'emails/appels en soirée ou week-end sauf urgence absolue)</li>
+                        <li>Flexibilité pour les contraintes personnelles</li>
+                        <li>Encouragement à prendre ses congés intégralement</li>
+                        <li>Gestion des heures supplémentaires</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Culture de prévention</div>
+                    <ul class="criteria-list">
+                        <li>Sensibilisation aux signaux de stress et d'épuisement (GRH BO)</li>
+                        <li>Formation des managers à repérer les situations à risque</li>
+                        <li>Procédures claires en cas de difficulté</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">5. Dispositifs de soutien (GRH BO)</div>
+                    <ul class="criteria-list">
+                        <li>Possibilité d'échanges confidentiels avec un professionnel externe</li>
+                        <li>Aménagements temporaires en cas de difficulté</li>
+                        <li>Accompagnement lors du retour après un arrêt maladie long</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Normaliser la parole sur la santé mentale</div>
+                        <div class="action-text">Cassez le tabou. Organisez des conférences, partagez des témoignages. Demander de l'aide est un signe de lucidité.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La prévention plutôt que la réparation</div>
+                        <div class="action-text">N'attendez pas le burn-out. Mettez en place des dispositifs préventifs.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Le droit à l'imperfection</div>
+                        <div class="action-text">Un collaborateur qui revient d'un arrêt n'a pas à performer au même niveau immédiatement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'exemplarité sur la déconnexion</div>
+                        <div class="action-text">Utilisez la fonction "envoi différé" ou assumez de ne pas être disponible 24/7.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Les signaux d'alerte à connaître (GRH BO)</div>
+                        <div class="action-text">Formez vos équipes à repérer : changement brutal de comportement, irritabilité, isolement, baisse de performance, commentaires cyniques.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">L'audit annuel de la charge de travail</div>
+                        <div class="action-text">Analysez la répartition de la charge entre collaborateurs. Identifiez les déséquilibres et réajustez.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">La charte du droit à la déconnexion</div>
+                        <div class="action-text">Pas d'emails entre 20h et 8h sauf urgence absolue. Définissez ce qu'est une "urgence absolue".</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">Les pauses obligatoires</div>
+                        <div class="action-text">Vraie pause déjeuner d'au moins 45 minutes. Pauses de 10 minutes toutes les 2h.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">L'accès à un psychologue du travail</div>
+                        <div class="action-text">Contractualisez avec un psychologue externe. Première consultation prise en charge par le cabinet.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">La journée bien-être annuelle</div>
+                        <div class="action-text">Activité collective : yoga, sophrologie, atelier gestion du stress.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Le télétravail partiel</div>
+                        <div class="action-text">Autorisez 1 à 2 jours de télétravail par semaine si l'activité le permet.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">La semaine de récupération post-gros dossier</div>
+                        <div class="action-text">Après un dossier intense, accordez une semaine allégée.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 8</div>
+                        <div class="action-title">Le questionnaire de bien-être semestriel</div>
+                        <div class="action-text">Deux fois par an, questionnaire anonyme court. Analysez les résultats collectifs et agissez.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilier-4" class="pillar-card">
+                <div class="pillar-number">PILIER 4</div>
+                <h3 class="pillar-title">Inclusion, diversité et égalité</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>L'inclusion n'est pas une mode. C'est une exigence éthique ET un levier de performance. Des équipes diversifiées sont plus créatives, plus résilientes.</p>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Votre cabinet est-il réellement ouvert à tous les talents, ou reproduit-il inconsciemment des schémas d'exclusion ?
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Politique interne diversité et égalité des chances</div>
+                    <ul class="criteria-list">
+                        <li>Engagement formalisé sur l'égalité des chances dans le recrutement et l'évolution</li>
+                        <li>Processus de recrutement garantissant l'équité</li>
+                        <li>Sensibilisation aux biais inconscients</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Égalité hommes/femmes</div>
+                    <ul class="criteria-list">
+                        <li>Égalité salariale à poste et expérience équivalents</li>
+                        <li>Accès équitable aux postes à responsabilité</li>
+                        <li>Mesures pour concilier parentalité et carrière</li>
+                        <li>Lutte contre le sexisme ordinaire</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Aménagements pour inclusion</div>
+                    <ul class="criteria-list">
+                        <li>Accessibilité des locaux pour personnes à mobilité réduite</li>
+                        <li>Aménagements spécifiques pour personnes en situation de handicap</li>
+                        <li>Prise en compte des contraintes familiales : horaires flexibles, équipements adaptés</li>
+                        <li>Adaptation des postes selon les besoins individuels</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Lutte contre les discriminations</div>
+                    <ul class="criteria-list">
+                        <li>Politique de tolérance zéro</li>
+                        <li>Procédure de signalement claire et confidentielle</li>
+                        <li>Sensibilisation régulière aux biais inconscients</li>
+                        <li>Sanction effective des comportements discriminatoires</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">5. Ouverture sociale</div>
+                    <ul class="criteria-list">
+                        <li>Efforts pour diversifier les profils recrutés</li>
+                        <li>Mentorat pour faciliter l'intégration</li>
+                        <li>Transparence sur les critères de recrutement</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Reconnaître les biais inconscients</div>
+                        <div class="action-text">Nous avons tous des biais. Le premier pas vers l'inclusion est de les reconnaître honnêtement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'inclusion commence au recrutement</div>
+                        <div class="action-text">CV anonymisés, annonces inclusives, jury diversifié, questions standardisées.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La parentalité n'est pas un frein</div>
+                        <div class="action-text">Congés parentaux encouragés, horaires aménagés, aucune pénalisation.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Prendre en compte les différences et fragilités (Institut Repère)</div>
+                        <div class="action-text">Un cabinet où tout le monde a le même profil s'appauvrit intellectuellement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Former à l'inclusion (Institut Repère)</div>
+                        <div class="action-text">Sensibilisation régulière aux enjeux d'inclusion et de diversité.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">L'audit diversité honnête</div>
+                        <div class="action-text">Analysez la composition de votre cabinet. Identifiez les déséquilibres éventuels.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">La formation aux biais inconscients</div>
+                        <div class="action-text">Demi-journée de sensibilisation pour tous.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">Le processus de recrutement repensé</div>
+                        <div class="action-text">Anonymisation des CV. Grilles d'évaluation standardisées. Jury mixte obligatoire.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">La charte parentalité</div>
+                        <div class="action-text">La parentalité ne pénalise pas la carrière. Congé paternité encouragé et valorisé.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">L'accessibilité physique et numérique</div>
+                        <div class="action-text">Audit d'accessibilité de vos locaux. Outils numériques compatibles avec technologies d'assistance.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Le référent diversité et inclusion</div>
+                        <div class="action-text">Nommez une personne volontaire comme référent.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">La communication inclusive</div>
+                        <div class="action-text">Écriture inclusive pragmatique. Représentation visuelle diversifiée.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 8</div>
+                        <div class="action-title">Le mentorat pour profils atypiques</div>
+                        <div class="action-text">Mentor pour aider à décoder les codes du cabinet.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 9</div>
+                        <div class="action-title">L'égalité salariale garantie</div>
+                        <div class="action-text">Audit des grilles de rémunération. Correction des écarts injustifiés.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilier-5" class="pillar-card">
+                <div class="pillar-number">PILIER 5</div>
+                <h3 class="pillar-title">Reconnaissance, évolution et sens</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>Les humains ont besoin de sens, de reconnaissance et de perspectives d'évolution. L'argent est nécessaire, mais insuffisant.</p>
+                
+                <div class="warning-box">
+                    <p><strong>Le triptyque fatal :</strong> Quand ces trois éléments manquent, on observe désengagement, frustration et départs.</p>
+                </div>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Donner à chaque collaborateur le sentiment que son travail a du sens, reconnaître régulièrement les efforts, offrir des perspectives claires.
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">A. Les pré-requis organisationnels</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Transparence et clarté</div>
+                    <ul class="criteria-list">
+                        <li>Transparence des objectifs du cabinet, des risques et des résultats</li>
+                        <li>Allocation des tâches clairement définie en fonction des capacités ET aspirations</li>
+                        <li>Chacun comprend comment son travail s'inscrit dans le projet global</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Contenu enrichissant du travail</div>
+                    <ul class="criteria-list">
+                        <li>Apprentissage réel, acquisition de nouveaux savoirs</li>
+                        <li>Employabilité : ce qu'apprend le collaborateur lui servira toute sa carrière</li>
+                        <li>Variété des missions pour éviter la routine</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Moyens adéquats</div>
+                    <ul class="criteria-list">
+                        <li>Donner les moyens de réaliser le travail et d'atteindre les objectifs</li>
+                        <li>Objectifs ambitieux mais atteignables</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">B. La qualité de l'environnement de travail</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Environnement matériel et psychologique</div>
+                    <ul class="criteria-list">
+                        <li>Conditions de travail de qualité</li>
+                        <li>Confiance a priori</li>
+                        <li>Encouragement de l'autonomie et de l'initiative</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Culture de coopération</div>
+                    <ul class="criteria-list">
+                        <li>Valorisation de la participation et du travail d'équipe</li>
+                        <li>Recherche du consensus dans la prise de décision</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Gestion partagée des difficultés</div>
+                    <ul class="criteria-list">
+                        <li>Système d'alerte : signaler les problèmes sans crainte</li>
+                        <li>Acceptation, partage et gestion des difficultés : coresponsabilité et soutien</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">C. La reconnaissance</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Reconnaissance régulière</div>
+                    <ul class="criteria-list">
+                        <li>Valorisation du travail accompli de manière explicite et fréquente (GRH BO)</li>
+                        <li>Feedback constructif</li>
+                        <li>Reconnaissance individuelle ET collective (GRH BO et Institut Repère)</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Reconnaissance diversifiée</div>
+                    <ul class="criteria-list">
+                        <li>Matérielle : rémunération juste, primes</li>
+                        <li>Symbolique : félicitations publiques</li>
+                        <li>Par le développement : responsabilités accrues</li>
+                        <li>Par l'autonomie : latitude dans l'organisation</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Équité de la reconnaissance</div>
+                    <ul class="criteria-list">
+                        <li>Pas réservée aux "chouchous"</li>
+                        <li>Contributions discrètes aussi valorisées</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">D. Évolution et développement professionnel</p>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Possibilités de formation</div>
+                    <ul class="criteria-list">
+                        <li>Budget formation alloué</li>
+                        <li>Encouragement à se former</li>
+                        <li>Temps dégagé pour la formation</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Perspectives d'évolution claires</div>
+                    <ul class="criteria-list">
+                        <li>Parcours de carrière explicite</li>
+                        <li>Critères transparents et objectifs</li>
+                        <li>Entretiens annuels d'évolution</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Alignement mission/valeurs</div>
+                    <ul class="criteria-list">
+                        <li>Implication dans le projet collectif (GRH BO et Institut Repère)</li>
+                        <li>Comprendre l'impact social de son travail</li>
+                        <li>Possibilité de refuser certains dossiers incompatibles avec ses valeurs</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Le feedback continu plutôt qu'annuel</div>
+                        <div class="action-text">Un "bravo" spontané a plus d'impact qu'une reconnaissance tardive.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La reconnaissance non-monétaire</div>
+                        <div class="action-text">Merci, dossier prestigieux confié, mention devant l'équipe, présentation en réunion.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'écoute des aspirations</div>
+                        <div class="action-text">Ne présumez pas savoir ce que veulent vos collaborateurs. Demandez-leur.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La valorisation de l'impact social</div>
+                        <div class="action-text">Rappelez le sens du métier : grâce à ton travail, cette personne a obtenu justice.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">L'entretien annuel structuré et obligatoire</div>
+                        <div class="action-text">2h par collaborateur une fois par an. Bilan, aspirations, objectifs année prochaine.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">Le carnet de reconnaissance</div>
+                        <div class="action-text">Chaque manager note régulièrement les contributions positives. Au moins une reconnaissance par collaborateur par mois.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">La réunion de célébration des victoires</div>
+                        <div class="action-text">Une fois par trimestre, célébrer collectivement les réussites.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">Le plan de développement individuel (PDI)</div>
+                        <div class="action-text">Co-construire un plan sur 2-3 ans pour chaque collaborateur.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">Le budget formation garanti</div>
+                        <div class="action-text">Allouer un budget annuel par collaborateur (ex : 1000-2000€).</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Les matinales thématiques internes</div>
+                        <div class="action-text">Un collaborateur volontaire présente un sujet pendant 45 minutes.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">La transparence stratégique</div>
+                        <div class="action-text">Présentation annuelle de la stratégie à toute l'équipe.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 8</div>
+                        <div class="action-title">Le système de parrainage</div>
+                        <div class="action-text">Chaque nouveau a un parrain/marraine pendant 6 mois.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 9</div>
+                        <div class="action-title">La boîte à initiatives</div>
+                        <div class="action-text">Propositions d'amélioration avec réponse sous 3 semaines.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 10</div>
+                        <div class="action-title">L'alignement valeurs/pratiques</div>
+                        <div class="action-text">Atelier annuel : "Quelles sont nos valeurs communes ?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilier-6" class="pillar-card">
+                <div class="pillar-number">PILIER 6</div>
+                <h3 class="pillar-title">Engagement sociétal et éthique professionnelle</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>Un cabinet d'avocats porte une mission de service public : défendre les droits, garantir l'accès à la justice, contribuer à l'État de droit.</p>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Garantir la cohérence entre vos pratiques internes et votre rôle social externe.
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Respect absolu de la déontologie et des obligations professionnelles</div>
+                    <ul class="criteria-list">
+                        <li>Connaissance et application des règles déontologiques</li>
+                        <li>Formation régulière à la déontologie</li>
+                        <li>Procédures internes pour prévenir les conflits d'intérêts</li>
+                        <li>Culture de l'intégrité</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Engagement pro bono et solidaire</div>
+                    <ul class="criteria-list">
+                        <li>Participation à des actions pro bono, mécénat ou solidaires</li>
+                        <li>Interventions bénévoles</li>
+                        <li>Encouragement des collaborateurs à s'engager</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Responsabilité dans les choix de clients et dossiers</div>
+                    <ul class="criteria-list">
+                        <li>Réflexion éthique sur l'acceptation des dossiers</li>
+                        <li>Transparence sur ces choix</li>
+                        <li>Possibilité pour un collaborateur de refuser un dossier incompatible avec ses convictions</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Absence de comportements ou condamnations portant atteinte à l'image</div>
+                    <ul class="criteria-list">
+                        <li>Aucune condamnation pénale ou disciplinaire grave</li>
+                        <li>Aucun comportement public incompatible avec la dignité de la profession</li>
+                        <li>Prévention active</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">5. Impact environnemental</div>
+                    <ul class="criteria-list">
+                        <li>Réflexion sur l'empreinte écologique</li>
+                        <li>Mesures concrètes : tri, dématérialisation, visioconférences</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">L'éthique comme culture</div>
+                        <div class="action-text">L'éthique est une boussole qui guide les décisions difficiles.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Le pro bono valorisé</div>
+                        <div class="action-text">Communiquez sur vos actions solidaires, valorisez les collaborateurs qui s'y investissent.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La transparence sur les dilemmes éthiques</div>
+                        <div class="action-text">Discussions collectives sur des cas concrets.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La prévention des dérives</div>
+                        <div class="action-text">Garde-fous : double signature, procédure de signalement, formation.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">La charte éthique du cabinet</div>
+                        <div class="action-text">Document court : "Nos valeurs, nos lignes rouges".</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">Formation déontologique annuelle obligatoire</div>
+                        <div class="action-text">3-4h par an minimum, pour tous.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">Objectif pro bono quantifié</div>
+                        <div class="action-text">Fixez un objectif collectif d'heures ou de dossiers.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">Le comité éthique</div>
+                        <div class="action-text">3-4 personnes se réunissent trimestriellement.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">La clause de conscience</div>
+                        <div class="action-text">Droit formalisé de refuser un dossier heurtant ses convictions.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Le partenariat associatif durable</div>
+                        <div class="action-text">Partenariat sur plusieurs années avec une ou deux associations.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 7</div>
+                        <div class="action-title">Le bilan RSE annuel</div>
+                        <div class="action-text">Bilan modeste : consommation, déplacements, actions solidaires.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 8</div>
+                        <div class="action-title">La veille réputation</div>
+                        <div class="action-text">Sensibilisation à la présence sur réseaux sociaux.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilier-7" class="pillar-card">
+                <div class="pillar-number">PILIER 7</div>
+                <h3 class="pillar-title">Relations avec clients et partenaires</h3>
+                
+                <h4 class="section-subsubtitle">Présentation et enjeux</h4>
+                
+                <p>La qualité de vos relations externes reflète et nourrit la qualité de vos relations internes.</p>
+                
+                <div class="emphasis-strong">
+                    <strong>L'enjeu :</strong> Garantir des relations saines et professionnelles qui créent un environnement de travail serein.
+                </div>
+                
+                <h4 class="section-subsubtitle">Critères indicatifs issus du référentiel</h4>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">1. Communication claire et transparente</div>
+                    <ul class="criteria-list">
+                        <li>Explication pédagogique à l'égard des clients : pas de jargon incompréhensible</li>
+                        <li>Information régulière sur l'avancement</li>
+                        <li>Transparence sur les honoraires</li>
+                        <li>Réponses dans des délais raisonnables</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">2. Gestion réaliste des attentes</div>
+                    <ul class="criteria-list">
+                        <li>Ne jamais faire de promesses impossibles</li>
+                        <li>Expliquer les limites du droit</li>
+                        <li>Préparer aux différents scénarios</li>
+                        <li>Refuser un dossier si manque de compétences</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">3. Respect des délais et engagements</div>
+                    <ul class="criteria-list">
+                        <li>Tenue des délais annoncés</li>
+                        <li>Qualité conforme aux standards</li>
+                        <li>Honnêteté en cas d'erreur</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">4. Confidentialité et intégrité dans la gestion des dossiers</div>
+                    <ul class="criteria-list">
+                        <li>Respect absolu du secret professionnel</li>
+                        <li>Sécurisation des données</li>
+                        <li>Aucun conflit d'intérêts non déclaré</li>
+                        <li>Loyauté envers le client</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">5. Relations équilibrées avec les partenaires</div>
+                    <ul class="criteria-list">
+                        <li>Respect des confrères et partenaires</li>
+                        <li>Paiement dans les délais</li>
+                        <li>Courtoisie</li>
+                    </ul>
+                </div>
+                
+                <div class="criteria-section">
+                    <div class="criteria-title">6. Gestion des réclamations</div>
+                    <ul class="criteria-list">
+                        <li>Procédure claire</li>
+                        <li>Écoute sincère</li>
+                        <li>Recherche de solutions amiables</li>
+                        <li>Apprentissage collectif</li>
+                    </ul>
+                </div>
+                
+                <h4 class="section-subsubtitle">Bonnes pratiques inspirées des chartes RH et GRH</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">La pédagogie avant tout</div>
+                        <div class="action-text">Traduire le juridique en compréhensible. Un client qui comprend fait confiance.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">La gestion proactive des attentes</div>
+                        <div class="action-text">Mieux vaut annoncer 18 mois et surprendre en 15, que promettre 6 et décevoir.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">L'humilité face à l'erreur</div>
+                        <div class="action-text">Reconnaître rapidement, réparer, s'excuser, expliquer les mesures correctives.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-title">Le respect des confrères</div>
+                        <div class="action-text">Traiter un confrère adverse avec respect crée un climat professionnel plus sain.</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-subsubtitle">Pistes d'action concrètes pour progresser</h4>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-number">Action 1</div>
+                        <div class="action-title">La lettre de mission systématique et pédagogique</div>
+                        <div class="action-text">Périmètre, délais, honoraires, limites, langage accessible.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 2</div>
+                        <div class="action-title">Le point d'étape régulier</div>
+                        <div class="action-text">Point mensuel pour les dossiers longs.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 3</div>
+                        <div class="action-title">Le questionnaire de satisfaction post-dossier</div>
+                        <div class="action-text">À la clôture, court questionnaire. Analyse collective.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 4</div>
+                        <div class="action-title">La procédure de gestion des réclamations</div>
+                        <div class="action-text">Document interne : comment traiter une réclamation.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 5</div>
+                        <div class="action-title">La formation "relation client"</div>
+                        <div class="action-text">1 journée : écoute active, clients difficiles, communication claire.</div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-number">Action 6</div>
+                        <div class="action-title">Le guide de bonnes pratiques relationnelles</div>
+                        <div class="action-text">Document court (5 pages max) co-rédigé.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="section-number">Chapitre 4</div>
+            <h2 id="section-4" class="section-title">Outils pratiques</h2>
+            
+            <h3 id="section-4-1" class="section-subtitle">4.1 Auto-questionnaires par pilier</h3>
+            
+            <p>Cette section propose des grilles d'auto-évaluation pour chaque pilier. Répondez honnêtement, sans chercher à embellir la réalité.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Mode d'emploi :</strong></p>
+                <p>Pour chaque critère, positionnez-vous sur l'échelle suivante :</p>
+                <ul class="custom-list">
+                    <li><strong>0 =</strong> Non mis en place / Inexistant</li>
+                    <li><strong>1 =</strong> Partiellement mis en place / Informel</li>
+                    <li><strong>2 =</strong> Correctement mis en place / Formalisé</li>
+                    <li><strong>3 =</strong> Excellemment mis en place / Culture ancrée</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 1 : Relations humaines et communication interne</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 2 : Management</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 3 : Bien-être</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 4 : Inclusion et diversité</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 5 : Reconnaissance et évolution</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 6 : Engagement sociétal</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">Auto-questionnaire Pilier 7 : Relations clients et partenaires</p>
+                <p><strong>Points forts identifiés :</strong> [À compléter]</p>
+                <p><strong>Axes d'amélioration prioritaires :</strong> [À compléter]</p>
+            </div>
+            
+            <h3 id="section-4-2" class="section-subtitle">4.2 Modèles de plan d'action progressif</h3>
+            
+            <h4 class="section-subsubtitle">Planification sur 3 horizons temporels</h4>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">COURT TERME</div>
+                <h4 class="pillar-title">Court terme (0-3 mois) : Les quick wins</h4>
+                
+                <p>Ce sont les actions rapides, peu coûteuses, à fort impact symbolique.</p>
+                
+                <p><strong>Exemples :</strong></p>
+                <ul class="custom-list">
+                    <li>Organiser une première réunion d'équipe avec ordre du jour partagé</li>
+                    <li>Installer une boîte à idées physique</li>
+                    <li>Rédiger et diffuser une charte de droit à la déconnexion</li>
+                    <li>Planifier les entretiens individuels du semestre</li>
+                    <li>Créer une adresse email dédiée aux signalements</li>
+                </ul>
+                
+                <p><strong>Critères de choix :</strong></p>
+                <ul class="custom-list">
+                    <li>Faisable immédiatement</li>
+                    <li>Ne nécessite pas de budget important</li>
+                    <li>Envoie un signal fort aux équipes</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">MOYEN TERME</div>
+                <h4 class="pillar-title">Moyen terme (3-12 mois) : Les transformations structurelles</h4>
+                
+                <p>Ce sont les changements qui nécessitent une organisation, un budget, une préparation.</p>
+                
+                <p><strong>Exemples :</strong></p>
+                <ul class="custom-list">
+                    <li>Formation managériale pour les encadrants (2-3 jours)</li>
+                    <li>Mise en place d'un processus de recrutement équitable</li>
+                    <li>Contractualisation avec un psychologue du travail</li>
+                    <li>Audit et réaménagement des espaces de travail</li>
+                    <li>Lancement d'un partenariat associatif pour le pro bono</li>
+                    <li>Mise en place d'un système de télétravail partiel</li>
+                </ul>
+                
+                <p><strong>Critères de choix :</strong></p>
+                <ul class="custom-list">
+                    <li>Impact durable sur l'organisation</li>
+                    <li>Nécessite une phase de préparation et de concertation</li>
+                    <li>Peut nécessiter un investissement financier</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">LONG TERME</div>
+                <h4 class="pillar-title">Long terme (1-3 ans) : Les transformations culturelles</h4>
+                
+                <p>Ce sont les changements profonds qui modifient durablement la culture du cabinet.</p>
+                
+                <p><strong>Exemples :</strong></p>
+                <ul class="custom-list">
+                    <li>Transformer radicalement le style de management (de directif à participatif)</li>
+                    <li>Réduire structurellement la charge horaire moyenne (ex : passer de 55h/sem à 45h/sem)</li>
+                    <li>Atteindre la parité hommes/femmes dans les postes de direction</li>
+                    <li>Obtenir une certification RSE</li>
+                    <li>Devenir un cabinet référent sur l'inclusion du handicap</li>
+                </ul>
+                
+                <p><strong>Critères de choix :</strong></p>
+                <ul class="custom-list">
+                    <li>Transformation en profondeur des pratiques</li>
+                    <li>Nécessite de la persévérance et de la patience</li>
+                    <li>Les résultats se mesurent sur plusieurs années</li>
+                </ul>
+            </div>
+            
+            <h3 id="section-4-3" class="section-subtitle">4.3 Indicateurs qualitatifs et quantitatifs</h3>
+            
+            <p>Pour mesurer vos progrès, vous avez besoin d'indicateurs. Voici une liste indicative par pilier.</p>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 1 : Relations humaines et communication</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Nombre de réunions d'équipe tenues / prévues</li>
+                    <li>Taux de participation aux réunions</li>
+                    <li>Nombre d'entretiens individuels réalisés</li>
+                    <li>Nombre d'idées reçues via la boîte à idées</li>
+                    <li>Délai moyen de réponse aux idées/questions</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Satisfaction sur la qualité de la communication (questionnaire annuel)</li>
+                    <li>Climat général ressenti (échelle de 1 à 10)</li>
+                    <li>Nombre de conflits non résolus / tensions persistantes</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 2 : Management</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Nombre de managers formés</li>
+                    <li>Nombre d'heures de formation managériale par an</li>
+                    <li>Fréquence des feedbacks (combien par collaborateur/mois)</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Satisfaction sur la qualité du management (questionnaire)</li>
+                    <li>Perception de la reconnaissance (échelle)</li>
+                    <li>Sentiment de justice dans le traitement (échelle)</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 3 : Bien-être</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Nombre moyen d'heures travaillées par semaine</li>
+                    <li>Nombre d'arrêts maladie (durée, fréquence)</li>
+                    <li>Nombre de jours de congés effectivement pris / total</li>
+                    <li>Nombre de consultations psychologue</li>
+                    <li>Taux de turnover</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Niveau de stress ressenti (échelle 1-10)</li>
+                    <li>Qualité du sommeil (échelle)</li>
+                    <li>Équilibre vie pro/perso (échelle)</li>
+                    <li>Risque de burn-out (questionnaire spécifique type Maslach)</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 4 : Inclusion et diversité</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Répartition hommes/femmes par niveau hiérarchique</li>
+                    <li>Écarts salariaux à poste équivalent</li>
+                    <li>Nombre de recrutements diversifiés</li>
+                    <li>Taux d'accessibilité des locaux</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Sentiment d'inclusion (questionnaire)</li>
+                    <li>Perception de l'égalité de traitement</li>
+                    <li>Signalements de discriminations (nombre, nature, traitement)</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 5 : Reconnaissance et évolution</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Nombre d'entretiens d'évolution réalisés</li>
+                    <li>Budget formation par collaborateur</li>
+                    <li>Nombre d'heures de formation par collaborateur/an</li>
+                    <li>Taux de promotion interne</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Satisfaction sur la reconnaissance (échelle)</li>
+                    <li>Sentiment d'avoir des perspectives d'évolution</li>
+                    <li>Alignement ressenti entre missions et valeurs</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 6 : Engagement sociétal</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Nombre d'heures pro bono / an</li>
+                    <li>Montant du mécénat</li>
+                    <li>Nombre d'heures de formation déontologique</li>
+                    <li>Empreinte carbone (si mesurée)</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Fierté d'appartenance au cabinet</li>
+                    <li>Perception de la cohérence éthique</li>
+                </ul>
+            </div>
+            
+            <div class="criteria-section">
+                <div class="criteria-title">Pilier 7 : Relations clients</div>
+                <p><strong>Quantitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Taux de réponse <48h aux emails clients</li>
+                    <li>Nombre de réclamations clients</li>
+                    <li>Taux de satisfaction client (questionnaire)</li>
+                    <li>Taux de clients récurrents</li>
+                </ul>
+                <p><strong>Qualitatifs :</strong></p>
+                <ul class="criteria-list">
+                    <li>Perception de la qualité relationnelle</li>
+                    <li>Retours spontanés positifs/négatifs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="section-number">Chapitre 5</div>
+            <h2 id="section-5" class="section-title">Illustrations</h2>
+            
+            <h3 id="section-5-1" class="section-subtitle">5.1 Vos premiers pas</h3>
+            
+            <p>Pour transformer la lecture en action, voici vos 3 premiers pas suggérés :</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">1</div>
+                    <div class="feature-title">Cette semaine</div>
+                    <div class="feature-text">Réservez 2h dans votre agenda pour lire attentivement les 7 piliers et compléter les auto-questionnaires.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">2</div>
+                    <div class="feature-title">Dans les 15 jours</div>
+                    <div class="feature-text">Organisez une réunion avec vos associés (si vous en avez) pour partager votre intérêt pour la démarche et décider ensemble si vous souhaitez vous lancer.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">3</div>
+                    <div class="feature-title">Dans le mois</div>
+                    <div class="feature-text">Présentez la démarche à vos équipes et distribuez les questionnaires individuels.</div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <p>Ces trois étapes ne vous engagent à rien de définitif. Elles ouvrent simplement une porte. C'est vous qui déciderez ensuite si vous souhaitez la franchir.</p>
+                <p><strong>Bon courage, et surtout : prenez plaisir à cette démarche. Elle peut transformer profondément votre quotidien professionnel, pour le meilleur.</strong></p>
+            </div>
+            
+            <h3 id="section-5-2" class="section-subtitle">5.2 Cas pratique : Cabinet Dupont & Associés</h3>
+            
+            <div class="pillar-card">
+                <p><strong>Contexte :</strong> Cabinet de 12 collaborateurs spécialisé en droit social à Lyon. Deux collaborateurs ont démissionné en l'espace de trois mois avec des lettres très critiques.</p>
+                
+                <h4 class="section-subsubtitle">Diagnostic initial :</h4>
+                <ul class="custom-list">
+                    <li><strong>Pilier 1 :</strong> Communication quasi-inexistante, pas de réunions d'équipe</li>
+                    <li><strong>Pilier 2 :</strong> Management directif, pas de reconnaissance</li>
+                    <li><strong>Pilier 3 :</strong> Charge de travail déséquilibrée, aucune limite horaire</li>
+                    <li><strong>Pilier 5 :</strong> Aucun entretien individuel, pas de perspectives claires</li>
+                </ul>
+                
+                <h4 class="section-subsubtitle">Plan d'action court terme (3 mois) :</h4>
+                <ul class="custom-list">
+                    <li>Instauration d'une réunion mensuelle obligatoire</li>
+                    <li>Distribution de questionnaires individuels confidentiels</li>
+                    <li>Mise en place d'entretiens individuels avec chaque collaborateur</li>
+                    <li>Rédaction d'une charte de droit à la déconnexion</li>
+                </ul>
+                
+                <h4 class="section-subsubtitle">Plan d'action moyen terme (6-12 mois) :</h4>
+                <ul class="custom-list">
+                    <li>Formation des trois associés au management bienveillant (3 jours)</li>
+                    <li>Création d'un comité consultatif avec représentants des collaborateurs</li>
+                    <li>Audit et rééquilibrage de la charge de travail</li>
+                    <li>Mise en place d'un budget formation individuel</li>
+                </ul>
+                
+                <h4 class="section-subsubtitle">Résultats après 1 an :</h4>
+                <ul class="custom-list">
+                    <li>Climat social transformé (score de satisfaction passé de 4/10 à 7/10)</li>
+                    <li>Zéro démission</li>
+                    <li>Deux recrutements réussis attirés par la démarche Label</li>
+                    <li>Les associés rapportent une sérénité retrouvée</li>
+                </ul>
+                
+                <div class="emphasis-strong">
+                    <strong>Leçon clé :</strong> La communication et la reconnaissance coûtent peu mais transforment beaucoup.
+                </div>
+            </div>
+            
+            <h3 id="section-5-3" class="section-subtitle">5.3 Illustration de progression étape par étape</h3>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">MOIS 1-3</div>
+                <h4 class="pillar-title">Mois 1-3 : Les fondations</h4>
+                <ul class="custom-list">
+                    <li><strong>Semaine 1 :</strong> Lecture du guide et appropriation</li>
+                    <li><strong>Semaine 2 :</strong> Présentation à l'équipe, distribution des questionnaires</li>
+                    <li><strong>Semaine 6 :</strong> Analyse des retours, synthèse</li>
+                    <li><strong>Semaine 8 :</strong> Première réunion d'équipe avec ordre du jour partagé</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">MOIS 4-6</div>
+                <h4 class="pillar-title">Mois 4-6 : Les premières actions</h4>
+                <ul class="custom-list">
+                    <li><strong>Mois 5 :</strong> Formation managériale (2 jours)</li>
+                    <li><strong>Mois 6 :</strong> Premiers entretiens individuels, mise en place du télétravail partiel</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">MOIS 7-12</div>
+                <h4 class="pillar-title">Mois 7-12 : L'ancrage</h4>
+                <ul class="custom-list">
+                    <li><strong>Mois 7-9 :</strong> Poursuite des réunions mensuelles, ajustements</li>
+                    <li><strong>Mois 12 :</strong> Bilan annuel, renouvellement du Label</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ANNÉE 2</div>
+                <h4 class="pillar-title">Année 2 : L'approfondissement</h4>
+                <ul class="custom-list">
+                    <li>Nouveaux questionnaires collaborateurs</li>
+                    <li>Mesure des progrès par indicateurs</li>
+                    <li>Nouvelles actions ciblées sur les axes encore faibles</li>
+                </ul>
+            </div>
+            
+            <div class="pillar-card">
+                <div class="pillar-number">ANNÉE 3</div>
+                <h4 class="pillar-title">Année 3 : La culture installée</h4>
+                <ul class="custom-list">
+                    <li>La démarche est devenue naturelle</li>
+                    <li>Les réflexes sont ancrés</li>
+                    <li>Le cabinet est reconnu pour sa culture humaine</li>
+                    <li>Attractivité et fidélisation maximales</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background: var(--trust-dark); color: white;">
+        <div class="container">
+            <h2 id="Conclusion" class="section-title" style="color: white;">Conclusion générale du guide</h2>
+            
+            <p style="color: rgba(255, 255, 255, 0.95); font-size: 18px;">Vous êtes arrivé au terme de ce guide. Peut-être vous sentez-vous inspiré, peut-être intimidé par l'ampleur de la tâche. Les deux sont légitimes.</p>
+            
+            <div class="highlight-box" style="background: rgba(255, 255, 255, 0.1); border-color: var(--trust-light);">
+                <p style="color: white;"><strong style="color: white;">Ce qu'il faut retenir :</strong></p>
+                <p style="color: rgba(255, 255, 255, 0.95);">Le Label Confiance n'est pas un idéal inaccessible réservé aux cabinets parfaits. Il n'existe d'ailleurs aucun cabinet parfait. Nous travaillons tous avec des humains, dans des contextes contraints, avec des ressources limitées.</p>
+                <p style="color: rgba(255, 255, 255, 0.95);">Ce label est une invitation à commencer, là où vous êtes, avec vos moyens, votre histoire, vos fragilités. Il ne vous demande pas la perfection immédiate, il vous demande la sincérité et le mouvement.</p>
+            </div>
+            
+            <h3 class="section-subtitle" style="color: white;">Chaque action compte :</h3>
+            
+            <p style="color: rgba(255, 255, 255, 0.95);">Une première réunion d'équipe ouverte, c'est déjà un signal fort. Un entretien individuel où vous écoutez vraiment, c'est déjà une graine plantée. Une formation managériale suivie, c'est déjà une transformation amorcée.</p>
+            
+            <p style="color: rgba(255, 255, 255, 0.95);">Ne sous-estimez jamais l'impact de ces "petits" gestes. Ce sont eux qui, accumulés, créent une culture différente. Ce sont eux qui, un matin, feront qu'un collaborateur se dira : "J'ai de la chance de travailler ici."</p>
+            
+            <h3 class="section-subtitle" style="color: white;">L'invitation finale :</h3>
+            
+            <p style="color: rgba(255, 255, 255, 0.95);">Si ce guide vous a parlé, ne le rangez pas dans un tiroir. Partagez-le avec vos associés. Discutez-en avec vos collaborateurs. Identifiez une première action, simple, faisable dans le mois qui vient.</p>
+            
+            <p style="color: rgba(255, 255, 255, 0.95);">Et si vous avez besoin d'aide, d'un regard extérieur, d'un encouragement : contactez-nous. Nous sommes là pour accompagner, pas pour juger.</p>
+            
+            <div class="quote" style="background: rgba(255, 255, 255, 0.1); border-left: 4px solid var(--gold-accent);">
+                <p style="font-size: 24px; font-weight: 600; margin-bottom: 20px;">Le Label Confiance est un mouvement.</p>
+                <p style="font-size: 18px;">Un mouvement qui affirme que la profession d'avocat peut être exigeante ET humaine. Que l'excellence professionnelle et le respect des personnes ne sont pas contradictoires. Qu'un cabinet où l'on prend soin de ses équipes est un cabinet plus fort, plus créatif, plus pérenne.</p>
+            </div>
+            
+            <p style="color: rgba(255, 255, 255, 0.95); font-size: 20px; text-align: center; margin: 50px 0;">
+                <strong>Bienvenue dans ce mouvement.</strong>
+            </p>
+            
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 18px; text-align: center; font-style: italic;">
+                Avec toute notre confiance en votre capacité à transformer votre cabinet,
+            </p>
+            
+            <p style="color: var(--gold-accent); font-size: 22px; text-align: center; font-weight: 600; margin-top: 30px;">
+                L'équipe Label Confiance
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-title">FIN DU GUIDE LABEL CONFIANCE</div>
+            <div class="footer-text">
+                Version 1.0 - Octobre 2025<br>
+                Document à usage des cabinets d'avocats candidats au Label Confiance
+            </div>
+            <div class="footer-meta">
+                © 2025 Label Confiance - Tous droits réservés
+            </div>
+        </div>
+    </div>
+
+<script>
+  window.addEventListener("scroll", function() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  });
+</script>
+
+<script>
+// Progress bar dynamique
+window.addEventListener('scroll', function() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  document.getElementById('progress-bar').style.width = scrollPercent + '%';
+});
+
+// Toggle sommaire
+const tocToggle = document.getElementById('toc-toggle');
+const floatingToc = document.getElementById('floating-toc');
+
+tocToggle.addEventListener('click', () => {
+  floatingToc.classList.toggle('hidden');
+});
+
+// Accordéon des chapitres
+document.querySelectorAll('.toc-chapter-title').forEach(title => {
+  title.addEventListener('click', () => {
+    const sections = title.nextElementSibling;
+    const chevron = title.querySelector('.toc-chevron');
+    sections.classList.toggle('expanded');
+    chevron.classList.toggle('rotated');
+  });
+});
+
+// Navigation par scroll depuis le sommaire (seulement pour les sous-sections)
+document.querySelectorAll('.toc-section').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const targetId = item.getAttribute('data-section');
+    if (targetId) {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Optionnel : fermer le sommaire sur mobile après navigation
+        if (window.innerWidth <= 1200) {
+          setTimeout(() => {
+            floatingToc.classList.add('hidden');
+          }, 500);
+        }
+      }
+    }
+  });
+});
+
+// Fonctionnalité de conversion PDF
+document.getElementById('pdf-download').addEventListener('click', async () => {
+  const pdfButton = document.getElementById('pdf-download');
+  const originalText = pdfButton.querySelector('span').textContent;
+  
+  try {
+    // Afficher un message de progression
+    pdfButton.querySelector('span').textContent = '⏳';
+    pdfButton.disabled = true;
+
+    // Masquer temporairement les éléments de navigation pour le PDF
+    const elementsToHide = [
+      document.getElementById('progress-container'),
+      document.getElementById('toc-toggle'),
+      document.getElementById('pdf-download'),
+      document.getElementById('floating-toc')
+    ];
+    
+    const originalDisplays = elementsToHide.map(el => el ? el.style.display : '');
+    elementsToHide.forEach(el => {
+      if (el) el.style.display = 'none';
+    });
+
+    // Attendre un peu pour que les éléments soient masqués
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Capturer le contenu avec html2canvas
+    const canvas = await html2canvas(document.body, {
+      scale: 0.75,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      width: window.innerWidth,
+      height: document.body.scrollHeight,
+      scrollX: 0,
+      scrollY: 0
+    });
+
+    // Créer le PDF avec jsPDF
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    
+    const imgData = canvas.toDataURL('image/jpeg', 0.7);
+    const imgWidth = 210; // A4 width in mm
+    const pageHeight = 295; // A4 height in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // Ajouter la première page
+    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    // Ajouter des pages supplémentaires si nécessaire
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    // Sauvegarder le PDF
+    pdf.save('Label-Confiance-Guide.pdf');
+    
+    // Restaurer les éléments masqués
+    elementsToHide.forEach((el, index) => {
+      if (el) el.style.display = originalDisplays[index];
+    });
+    
+    // Restaurer le bouton
+    pdfButton.querySelector('span').textContent = originalText;
+    pdfButton.disabled = false;
+    
+  } catch (error) {
+    console.error('Erreur lors de la génération du PDF:', error);
+    
+    // Restaurer tous les éléments en cas d'erreur
+    [
+      document.getElementById('progress-container'),
+      document.getElementById('toc-toggle'),
+      document.getElementById('pdf-download'),
+      document.getElementById('floating-toc')
+    ].forEach(el => {
+      if (el) el.style.display = '';
+    });
+    
+    // Restaurer le bouton
+    pdfButton.querySelector('span').textContent = originalText;
+    pdfButton.disabled = false;
+    
+    alert('Erreur lors de la génération du PDF. Le document est très volumineux, cela peut prendre du temps. Veuillez réessayer.');
+  }
+});
+</script>
+
+
+</body>
+</html>
